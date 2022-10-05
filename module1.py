@@ -13,7 +13,7 @@ print(date.day , '-' , date.month , '-' , date.year)
 print(random_station)
 print(message)
 
-message = "\n"+ str(name) + "\n" + str(date.day) + '-' + str(date.month) + '-' + str(date.year)+ "\n" + str(random_station)+ "\n" + str(message) + "\n"
+message = "\n"+ str(name) + "\n" + str(date.day) + '-' + str(date.month) + '-' + str(date.year)+ "\n" + str(random_station)+ "\n" + str(message)
 f = open("module1.csv", "a")
 f.write(message)
 f.close()
