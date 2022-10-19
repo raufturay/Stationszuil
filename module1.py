@@ -1,13 +1,18 @@
 import datetime
 import random
+
 name = input('wat is je naam: ')
+if name == '':
+    name = 'Anoniem'
 message = input('je feedback: ')
 station = ['Arnhem', 'Utrecht', 'Alkmaar']
 date = datetime.datetime.now()
+
 if len(message) > 140:
     print('bericht te lang')
     message = input('je feedback: ')
 random_station = random.choice(station)
+
 print(name)
 print(date.day , '-' , date.month , '-' , date.year)
 print(random_station)
