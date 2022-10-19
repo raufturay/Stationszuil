@@ -14,14 +14,8 @@ def data_entry(name, date, station, bericht, goedkeuring, keurdatum, keurtijd, i
 
     conn.commit()
 
-def data_entry2(name, date, station, bericht, goedkeuring, keurdatum, keurtijd ,id):
-    c.execute("INSERT INTO berichtenns (naam, datum, bericht, station,goedkeuring,goedkeuringdatum,goedkeuringtijd,moderatorid) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)",(name, date, station, bericht, goedkeuring, keurdatum, keurtijd,id))
 
 
-        # c.execute(f"INSERT INTO berichtenns (naam, datum, bericht, station,goedkeuring,goedkeuringdatum,goedkeuringtijd) VALUES('{name}', '{date}', '{station}', '{bericht}','{goedkeuring}', '{keurdatum}', '{keurtijd}');")
-
-
-    conn.commit()
 
 file = open("module1.csv")
 lines = len(file.readlines())
@@ -65,7 +59,7 @@ for line in range(1,lines,4):
         modid = c.fetchall()
         id = modid[0]
         id = id[0]
-        data_entry2(naam,datum,station,bericht,goedkeuring,keurdatum,keurtijd,id)
+        data_entry(naam,datum,station,bericht,goedkeuring,keurdatum,keurtijd,id)
         print("2")
 
 file.close()
