@@ -5,7 +5,7 @@ conn = psycopg2.connect(
 c = conn.cursor()
 
 def data_entry(name, date, station, bericht, goedkeuring, keurdatum, keurtijd, id):
-    c.execute("INSERT INTO berichtenns (naam, datum, bericht, station,goedkeuring,goedkeuringdatum,goedkeuringtijd,moderatorid) VALUES(%s , %s,%s,%s,%s,%s,%s,%s)",(name, date, station, bericht,goedkeuring, keurdatum, keurtijd,id))
+    c.execute("INSERT INTO berichtenns (naam, datum, station, bericht,goedkeuring,goedkeuringdatum,goedkeuringtijd,moderatorid) VALUES(%s , %s,%s,%s,%s,%s,%s,%s)",(name, date, station, bericht,goedkeuring, keurdatum, keurtijd,id))
     # c.execute(f"INSERT INTO berichtenns (naam, datum, bericht, station,goedkeuring,goedkeuringdatum,goedkeuringtijd) VALUES('{name}', '{date}', '{station}', '{bericht}','{goedkeuring}', '{keurdatum}', '{keurtijd}');")
 
 
@@ -22,19 +22,16 @@ lines = len(file.readlines())
 file.close()
 
 file = open("module1.csv", "r")
-for line in range(1,lines,4):
 
-    naam = file.readlines(line)
-    naam = naam[0].strip()
+for line in file:
+    totaal = line.strip().split(";")
+    naam = totaal[0]
     print(naam)
-    datum = file.readlines(line+1)
-    datum = datum[0].strip()
+    datum = totaal[1]
     print(datum)
-    station = file.readlines(line+2)
-    station = station[0].strip()
+    station = totaal[2]
     print(station)
-    bericht = file.readlines(line+3)
-    bericht = bericht[0].strip()
+    bericht = totaal[3]
     print(bericht)
     goedkeuring = input('keur je dit bericht goed: ')
     date = datetime.datetime.now()
@@ -50,7 +47,6 @@ for line in range(1,lines,4):
             c.execute("SELECT moderatorid FROM moderatorns WHERE email =  %s", [moderatoremail])
             id = c.fetchall()
             data_entry(naam, datum, station, bericht, goedkeuring, keurdatum, keurtijd, id[0])
-            print("1")
             break
     else:
         c.execute("INSERT INTO moderatorns (naam, email) VALUES(%s,%s)", (moderatornaam, moderatoremail))
@@ -60,6 +56,4 @@ for line in range(1,lines,4):
         id = modid[0]
         id = id[0]
         data_entry(naam,datum,station,bericht,goedkeuring,keurdatum,keurtijd,id)
-        print("2")
-
 file.close()
