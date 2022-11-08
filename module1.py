@@ -7,10 +7,12 @@ if name == '':
 message = input('je feedback: ')
 station = ['Arnhem', 'Utrecht', 'Alkmaar']
 date = datetime.datetime.now()
-
-if len(message) > 140:
-    print('bericht te lang')
-    message = input('je feedback: ')
+while True:
+    if len(message) < 140:
+        break
+    else:
+        print('bericht te lang')
+        message = input('je feedback: ')
 random_station = random.choice(station)
 
 print(name)

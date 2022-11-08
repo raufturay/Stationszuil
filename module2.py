@@ -56,4 +56,7 @@ for line in file:
         id = modid[0]
         id = id[0]
         data_entry(naam,datum,station,bericht,goedkeuring,keurdatum,keurtijd,id)
+
 file.close()
+with open("module1.csv",'r+') as file:
+    file.truncate(0)

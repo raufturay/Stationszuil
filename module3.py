@@ -7,9 +7,7 @@ conn = psycopg2.connect(
    dbname="Stationszuil", user='postgres', password='rauf', host='localhost')
 c = conn.cursor()
 
-response = requests.get("https://api.openweathermap.org/data/2.5/weather?lat=52.092876&lon=5.104480&appid=8933246e2b0024f9c7e65dde3a317fbf")
-for i in response:
-   print(i)
+
 root = tk.Tk()
 root.title("module 3 GUI")
 root.geometry("1100x850")
@@ -18,19 +16,25 @@ passw_var = tk.StringVar()
 
 
 # defining a function that will
-# get the name and password and
-# print them on the screen
+# get the station name and
+# print facilities and weather on the screen
 def submit():
    name_label.pack_forget()
    name_entry.pack_forget()
    sub_btn.pack_forget()
+   global name
    name = name_var.get()
+
+   response = requests.get(
+      "https://api.openweathermap.org/data/2.5/weather?q=" + name + "&appid=8933246e2b0024f9c7e65dde3a317fbf")
+
+
    message = tk.Label(root, text="Berichten", font=('Arial',18))
    message.pack(padx=20,pady=20)
-   c.execute("SELECT naam,datum,bericht FROM berichtenns order by datum asc fetch  first 5 rows only ")
+   c.execute("SELECT naam,datum,bericht FROM berichtenns Where goedkeuring = 'ja' order by datum asc fetch  first 5 rows only")
    berichten = c.fetchall()
    for bericht in berichten:
-      message = tk.Label(root, text=f"{bericht[0]} zegt op {bericht[1]}\n{bericht[2]}", font=('Arial', 12))
+      message = tk.Label(root, relief="sunken" ,text=f"{bericht[0]} zegt op {bericht[1]}\n{bericht[2]}", font=('Arial', 12))
       message.pack(padx=20, pady=20)
 
    c.execute("SELECT ovbike, elevator,toilet,par_and_ride FROM services WHERE station = %s", [name])
